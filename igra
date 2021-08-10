@@ -1,0 +1,138 @@
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.Collections;
+
+public class igra {
+
+    public static int newMineLower = 1000;
+    public static int newMine = 0;
+    public static List<Integer> userTriesBigger = new ArrayList<>();
+    public static List<Integer> userTriesLower = new ArrayList<>();
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_RESET = "\u001B[0m";
+
+    public static void clearScreen() {
+        for (int i = 0; i < 100; ++i) System.out.println();
+    }
+
+
+public static int generateMineBigger(int a) {
+
+        userTriesBigger.add(a);
+
+        a = Collections.max(userTriesBigger);
+
+        return a;
+
+
+
+}
+
+public static int generateMineLower(int a) {
+
+
+        userTriesLower.add(a);
+
+        a = Collections.min(userTriesLower);
+
+        return a;
+
+    }
+
+    public static void main(String[] args) {
+
+        int wannaPlay = 1;
+        int mineBlown = 0;
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print ("Игрок 1 введи имя: ");
+        String playerOneName = scanner.nextLine();
+        System.out.print("Игрок 2 введи имя: ");
+        String playerTwoName = scanner.nextLine();
+        String playerNameContainer;
+        Random rand = new Random();
+
+
+        while (wannaPlay != 2) {
+
+            System.out.print(playerOneName + " введи число: ");
+            int randomInt = scanner.nextInt();
+            int steps = 0;
+
+            while (randomInt < 0 || randomInt > 1000) {
+                System.out.println("Сука число должно быть от 0 до 1000 долбаеб");
+                randomInt = scanner.nextInt();
+            }
+
+            int mine = rand.nextInt(1000);
+            while (mine == randomInt) {
+                mine = rand.nextInt(1000);
+            }
+
+            clearScreen();
+
+            int userInput = -1; // Это нужно, чтобы цикл запустился, если Random выдаст 0
+            System.out.println(playerTwoName + " ты угадываешь");
+            System.out.println("Мина сгенерирована");
+            System.out.println("Ваш ход:");
+
+            while (userInput != randomInt) {
+
+                userInput = scanner.nextInt(); // В этой переменной должен сохраняться ввод пользователя
+
+                steps++;
+
+
+                if (userInput > randomInt) { // Условие проверяется в цикле
+                    System.out.println(ANSI_RED + "Меньше" + ANSI_RESET);
+                    newMineLower = generateMineLower(userInput);
+                    mine = ThreadLocalRandom.current().nextInt(newMine, newMineLower + 1);
+                    System.out.println("Новая мина сгенерирована в диапазоне от " + newMine + " до " + newMineLower);
+
+                } else if (userInput < randomInt) {    // Второе условие
+                    System.out.println(ANSI_GREEN + "Больше" + ANSI_RESET);
+                    newMine = generateMineBigger(userInput);
+                    mine = ThreadLocalRandom.current().nextInt(newMine, newMineLower + 1);
+                    System.out.println("Новая мина сгенерирована в диапазоне от " + newMine + " до " + newMineLower);
+
+
+                } else if (userInput == mine) {
+                    System.out.println("Ты проебал попался на мину лох ебучий");
+                    mineBlown = 1;
+                    break;
+                }
+                // Печатаем, когда число угадано
+
+            }
+
+            if (mineBlown == 1) {
+                System.out.println("Пиздец ты еблан конечно");
+            }
+            else {
+                System.out.println("Вы великолепны! Именно это я загадал.");
+                System.out.println("Попыток сделано: " + steps);
+            }
+            System.out.println("Мина была: " + mine);
+            System.out.println("Хотите играть еще? 1. Да 2. Нет");
+            wannaPlay = scanner.nextInt();        // спрашивается желают ли продолжить
+
+            if (wannaPlay == 2) {
+                for (int i = 0; i < 100; i++) {
+                    System.out.println("Ну и пошел нахуй");
+                }
+
+            }
+            userTriesLower.clear();
+            userTriesBigger.clear();
+            newMineLower = 1000;
+            newMine= 0;
+
+
+            playerNameContainer = playerOneName; // смена хода игроков
+            playerOneName = playerTwoName;
+            playerTwoName = playerNameContainer;
+        }
+    }
+}
