@@ -1,0 +1,74 @@
+import java.util.Scanner;
+
+class DrawSquare {
+
+
+    void drawFilledSquare(int height2, int width2, String letter2) {
+
+
+        int m = 0;
+        while (m < height2) {
+            int n = 0;
+            while (n < width2) {
+                System.out.print(letter2);
+                n++;
+            }
+            System.out.println();
+            m++;
+        }
+    }
+
+    void drawEmptySquare(int height2, int width2, String letter2) {
+        int m = 0;
+        while (m < height2) {
+            System.out.print(letter2);
+            int n = 1;
+            if ((m == 0) || (m == (height2 - 1))) {
+                while (n < (width2 - 1)) {
+                    System.out.print(letter2);
+                    n++;
+                }
+            } else {
+                while (n < (width2 - 1)) {
+                    System.out.print(" ");
+                    n++;
+                }
+            }
+            System.out.print(letter2);
+            System.out.println();
+            m++;
+        }
+    }
+}
+
+public class JavaRushCycle {
+
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        DrawSquare draw = new DrawSquare();
+
+        int height;
+        int width;
+        String letter = null;
+
+        System.out.print("Введите высоту, ширину и букву прямоугольника через пробел: ");
+        while (true) {
+            height = input.nextInt();
+            width = input.nextInt();
+            letter = input.next();
+
+            if (letter.length() == 1)
+                break;
+            else
+                System.out.print("Введите высоту и ширину прямоугольника через пробел: ");
+        }
+
+        System.out.print("Введите 1, если прямоугольник надо заполнить и 0 если не надо: ");
+        int choice = input.nextInt();
+
+        if (choice == 0)
+            draw.drawEmptySquare(height, width, letter);
+        else if (choice == 1)
+            draw.drawFilledSquare(height, width, letter);
+    }
+}
