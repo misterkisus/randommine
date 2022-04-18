@@ -62,7 +62,7 @@ public static int generateMineLower(int a) {
             int steps = 0;
 
             while (randomInt < 0 || randomInt > 1000) {
-                System.out.println("Сука число должно быть от 0 до 1000 долбаеб");
+                System.out.println("число должно быть от 0 до 1000");
                 randomInt = scanner.nextInt();
             }
 
@@ -99,7 +99,7 @@ public static int generateMineLower(int a) {
 
 
                 } else if (userInput == mine) {
-                    System.out.println("Ты проебал попался на мину лох ебучий");
+                    System.out.println("Ты попался на мину");
                     mineBlown = 1;
                     break;
                 }
@@ -108,7 +108,7 @@ public static int generateMineLower(int a) {
             }
 
             if (mineBlown == 1) {
-                System.out.println("Пиздец ты еблан конечно");
+                System.out.println("Взорван");
             }
             else {
                 System.out.println("Вы великолепны! Именно это я загадал.");
@@ -120,7 +120,7 @@ public static int generateMineLower(int a) {
 
             if (wannaPlay == 2) {
                 for (int i = 0; i < 100; i++) {
-                    System.out.println("Ну и пошел нахуй");
+                    System.out.println("Пока");
                 }
 
             }
